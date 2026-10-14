@@ -1,0 +1,5593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+content="Vivenebri — artista tradicional, digital, animador y creador experimental. THE DARK SIDE OF THE HEAVEN.">
+
+<meta name="theme-color" content="#020202">
+
+<title>THE DARK SIDE OF THE HEAVEN — Vivenebri</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Special+Elite&display=swap"
+rel="stylesheet">
+
+
+<style>
+
+/* =========================================================
+   VIVENEBRI
+   THE DARK SIDE OF THE HEAVEN
+   ERROR-CORE / DIGITAL GRUNGE ARCHIVE
+========================================================= */
+
+:root{
+    --black:#020202;
+    --dark:#080808;
+    --dark2:#101010;
+    --gray:#555;
+    --gray2:#777;
+    --light:#aaa;
+    --white:#eeeeee;
+
+    --line:rgba(255,255,255,.16);
+    --soft-line:rgba(255,255,255,.08);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--black);
+    color:var(--white);
+
+    isolation:isolate;
+
+    font-family:"IBM Plex Mono", monospace;
+
+    min-height:100vh;
+    overflow-x:hidden;
+    overflow-y:auto;
+
+    cursor:crosshair;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+::selection{
+    background:white;
+    color:black;
+}
+
+
+/* =========================================================
+   BACKGROUND — RECUPERADO DEL ANTIGUO
+========================================================= */
+
+body::before{
+    content:"";
+
+    position:fixed;
+    inset:0;
+
+    z-index:-20;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(46,46,46,.96) 0%,
+            rgba(16,16,16,.96) 48%,
+            rgba(0,0,0,.98) 100%
+        ),
+        url("assets/background.png");
+
+    background-size:cover;
+    background-position:center;
+
+    opacity:.78;
+
+    filter:
+        grayscale(1)
+        contrast(1.45);
+
+    transform:scale(1.01);
+}
+
+.background-glow{
+
+    position:fixed;
+    inset:0;
+
+    z-index:-19;
+
+    pointer-events:none;
+    user-select:none;
+
+    opacity:.3;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(210,210,210,.25) 0%,
+            rgba(130,130,130,.11) 52%,
+            rgba(70,70,70,.03) 82%,
+            transparent 100%
+        );
+
+    transition:opacity .12s linear;
+
+}
+
+.background-static{
+
+    position:fixed;
+    inset:0;
+
+    z-index:-18;
+
+    pointer-events:none;
+    user-select:none;
+
+    opacity:.08;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .2126 .7152 .0722 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23000' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+
+    background-size:180px 180px;
+
+}
+
+
+/* =========================================================
+   CRT SCANLINES
+========================================================= */
+
+body::after{
+    content:"";
+
+    position:fixed;
+    inset:0;
+
+    z-index:9997;
+
+    pointer-events:none;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(255,255,255,.035) 4px
+        );
+
+    mix-blend-mode:screen;
+
+    opacity:.75;
+}
+
+
+/* =========================================================
+   STATIC NOISE
+========================================================= */
+
+.particle-field{
+
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+
+    z-index:-9;
+
+    pointer-events:none;
+    user-select:none;
+
+}
+
+.particle-field.is-foreground{
+    z-index:950;
+}
+
+.particle{
+
+    position:absolute;
+    top:var(--particle-top);
+    left:var(--particle-left);
+
+    width:var(--particle-width);
+    height:var(--particle-height);
+
+    border-radius:var(--particle-radius);
+
+    background:#000;
+
+    opacity:0;
+
+    animation:
+        particleFloat var(--particle-duration) linear var(--particle-delay) infinite;
+
+}
+
+.particle:not(.is-active){
+    display:none;
+}
+
+.particle-field.is-audio-fast .particle{
+    animation-duration:var(--particle-fast-duration);
+}
+
+.particle-field.is-audio-faster .particle{
+    animation-duration:var(--particle-faster-duration);
+}
+
+@keyframes particleFloat{
+
+    0%{
+        opacity:0;
+        transform:translate3d(0,0,0) scale(.65) rotate(0deg);
+    }
+
+    6%{
+        opacity:var(--particle-opacity);
+        transform:translate3d(var(--particle-sway-one),-24vh,0) scale(1) rotate(18deg);
+    }
+
+    19%{
+        opacity:.35;
+        transform:translate3d(var(--particle-drift),-52vh,0) scale(.72) rotate(-22deg);
+    }
+
+    33%{
+        opacity:var(--particle-opacity);
+        transform:translate3d(var(--particle-sway-two),-82vh,0) scale(1.08) rotate(35deg);
+    }
+
+    49%{
+        opacity:.28;
+        transform:translate3d(var(--particle-sway-one),-112vh,0) scale(.7) rotate(-18deg);
+    }
+
+    65%{
+        opacity:var(--particle-opacity);
+        transform:translate3d(var(--particle-drift),-142vh,0) scale(1.05) rotate(27deg);
+    }
+
+    92%{
+        opacity:.4;
+        transform:translate3d(var(--particle-sway-two),-176vh,0) scale(.72) rotate(-30deg);
+    }
+
+    100%{
+        opacity:0;
+        transform:translate3d(var(--particle-drift),-205vh,0) scale(.55) rotate(45deg);
+    }
+
+}
+
+.chain-field{
+
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:min(72vh,720px);
+    overflow:hidden;
+
+    z-index:-8;
+
+    pointer-events:none;
+    user-select:none;
+
+}
+
+.hanging-chain{
+
+    position:absolute;
+    top:-8px;
+
+    width:var(--chain-width);
+    height:var(--chain-length);
+
+    opacity:var(--chain-opacity);
+    transform-origin:top center;
+
+    animation:
+        chainSway var(--chain-duration) ease-in-out var(--chain-delay) infinite alternate;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 0 33%,
+            rgba(0,0,0,.96) 39% 61%,
+            transparent 67%
+        ) center top / var(--link-width) var(--link-height) repeat-y,
+        linear-gradient(rgba(0,0,0,.96),rgba(0,0,0,.96)) center / 2px 100% no-repeat;
+
+}
+
+@keyframes chainSway{
+
+    from{
+        transform:rotate(calc(var(--chain-angle) - var(--chain-swing)));
+    }
+
+    to{
+        transform:rotate(calc(var(--chain-angle) + var(--chain-swing)));
+    }
+
+}
+
+/* =========================================================
+   GLOBAL SIGNAL EFFECTS
+========================================================= */
+
+.glitch-bar{
+    position:fixed;
+
+    z-index:-9;
+
+    height:2px;
+
+    background:white;
+
+    pointer-events:none;
+    user-select:none;
+
+    opacity:0;
+
+    mix-blend-mode:difference;
+}
+
+.flash{
+    position:fixed;
+
+    inset:0;
+
+    background:white;
+
+    z-index:10001;
+
+    pointer-events:none;
+
+    opacity:0;
+}
+
+.flash.active{
+    animation:
+        screenFlash .12s steps(2);
+}
+
+.boot-glitch{
+
+    animation:bootCodeReveal .4s steps(2,end) both;
+    animation-delay:var(--boot-delay,0ms);
+
+}
+
+@keyframes bootCodeReveal{
+
+    0%{
+        opacity:0;
+        clip-path:inset(0 100% 0 0);
+        transform:translateX(-4px);
+    }
+
+    24%{
+        opacity:1;
+        clip-path:inset(0 0 62% 0);
+        transform:translateX(3px);
+    }
+
+    52%{
+        clip-path:inset(38% 0 28% 0);
+        transform:translateX(-2px);
+    }
+
+    76%{
+        clip-path:inset(72% 0 0 0);
+        transform:translateX(1px);
+    }
+
+    100%{
+        opacity:1;
+        clip-path:inset(0);
+        transform:none;
+    }
+
+}
+
+@keyframes screenFlash{
+
+    0%{
+        opacity:0;
+    }
+
+    35%{
+        opacity:var(--flash-intensity,.13);
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container{
+    width:min(1450px,92%);
+
+    margin:auto;
+}
+
+section{
+    position:relative;
+
+    border-bottom:
+        1px solid var(--line);
+}
+
+main{
+    margin-top:44px;
+    overflow:visible;
+}
+
+.work{
+    padding:20px 0;
+}
+
+.work .work-header{
+    margin-bottom:20px;
+}
+
+.work .work-title{
+    font-size:clamp(38px,5vw,62px);
+}
+
+.work .work-category{
+    margin-bottom:0;
+}
+
+.contact{
+    padding:24px 0;
+}
+
+.contact .audio-player{
+    margin-top:24px;
+}
+
+
+/* =========================================================
+   FLOATING SYMBOLS
+========================================================= */
+
+.symbol{
+    position:absolute;
+
+    color:#aaa;
+
+    opacity:.23;
+
+    font-size:40px;
+
+    pointer-events:none;
+
+    z-index:1;
+
+    animation:
+        symbolFloat 6s infinite ease-in-out;
+}
+
+.symbol.s1{
+    top:12%;
+    left:7%;
+}
+
+.symbol.s2{
+    top:40%;
+    right:6%;
+
+    animation-delay:1s;
+}
+
+.symbol.s3{
+    bottom:18%;
+    left:4%;
+
+    animation-delay:2s;
+}
+
+.symbol.s4{
+    bottom:9%;
+    right:12%;
+
+    animation-delay:3s;
+}
+
+@keyframes symbolFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:
+            translateY(-10px)
+            rotate(4deg);
+    }
+}
+
+
+/* =========================================================
+   GLITCH TEXT — RECUPERADO
+========================================================= */
+
+.glitch{
+    position:relative;
+
+    display:inline-block;
+}
+
+.glitch::before,
+.glitch::after{
+    content:attr(data-text);
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.65;
+}
+
+.glitch::before{
+
+    color:#fff;
+
+    transform:
+        translate(-2px,1px);
+
+    clip-path:
+        polygon(
+            0 8%,
+            100% 8%,
+            100% 25%,
+            0 25%,
+
+            0 48%,
+            100% 48%,
+            100% 55%,
+            0 55%
+        );
+}
+
+.glitch::after{
+
+    color:#777;
+
+    transform:
+        translate(3px,-2px);
+
+    clip-path:
+        polygon(
+            0 65%,
+            100% 65%,
+            100% 73%,
+            0 73%,
+
+            0 88%,
+            100% 88%,
+            100% 94%,
+            0 94%
+        );
+}
+
+.glitch.active{
+
+    animation:
+        violentGlitch .16s steps(2);
+}
+
+@keyframes violentGlitch{
+
+    0%{
+        transform:translate(0);
+    }
+
+    25%{
+        transform:
+            translate(-7px,2px)
+            skewX(4deg);
+    }
+
+    50%{
+        transform:
+            translate(8px,-2px)
+            skewX(-7deg);
+    }
+
+    75%{
+        transform:
+            translate(-3px,4px);
+    }
+
+    100%{
+        transform:translate(0);
+    }
+}
+
+
+/* =========================================================
+   CORRUPTED TEXT
+========================================================= */
+
+.corrupted{
+    animation:
+        textCorruption .13s steps(2);
+}
+
+@keyframes textCorruption{
+
+    0%{
+        transform:
+            translate(0)
+            skewX(0);
+    }
+
+    25%{
+        transform:
+            translate(-5px,1px)
+            skewX(5deg);
+    }
+
+    50%{
+        transform:
+            translate(6px,-2px)
+            skewX(-7deg);
+    }
+
+    75%{
+        transform:
+            translate(-2px,3px);
+    }
+
+    100%{
+        transform:translate(0);
+    }
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    z-index:900;
+
+    padding:
+        14px 3%;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.16);
+
+    background:
+        rgba(0,0,0,.84);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font-size:10px;
+
+    letter-spacing:1px;
+}
+
+.logo-mini{
+
+    font-weight:bold;
+
+    color:#aaa;
+}
+
+.logo-mini:hover{
+    color:white;
+
+    animation:
+        violentGlitch .15s steps(2);
+}
+
+.status{
+    color:#888;
+
+    min-width:170px;
+
+    text-align:right;
+}
+
+.status::before{
+    content:"● ";
+
+    color:#aaa;
+}
+
+
+/* =========================================================
+   NAV
+========================================================= */
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    min-height:100vh;
+
+    padding:
+        120px 0 60px;
+
+    display:flex;
+
+    align-items:center;
+
+    overflow:hidden;
+}
+
+.hero-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1.15fr
+        1fr
+        .65fr;
+
+    gap:45px;
+
+    align-items:center;
+}
+
+
+/* =========================================================
+   HERO LOGO
+========================================================= */
+
+.logo-area{
+    position:relative;
+}
+
+.main-logo{
+
+    width:min(600px,100%);
+
+    filter:
+        grayscale(1)
+        contrast(1.5)
+        drop-shadow(4px 4px 0 #222);
+
+    transition:.2s;
+}
+
+.main-logo:hover{
+
+    filter:
+        grayscale(1)
+        contrast(2);
+
+    transform:
+        translateX(4px)
+        skewX(-2deg);
+}
+
+.logo-error{
+
+    margin-top:10px;
+
+    color:#666;
+
+    font-size:9px;
+
+    letter-spacing:.05em;
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.hero-title{
+
+    font-family:
+        "Special Elite",
+        serif;
+
+    font-size:
+        clamp(38px,5vw,78px);
+
+    line-height:.9;
+
+    text-transform:uppercase;
+
+    letter-spacing:-3px;
+}
+
+.hero-title span{
+    display:block;
+}
+
+.hero-title .small{
+
+    font-size:.55em;
+
+    letter-spacing:0;
+}
+
+.hero-description{
+
+    margin-top:30px;
+
+    max-width:600px;
+
+    color:#aaa;
+
+    font-size:12px;
+
+    line-height:1.8;
+}
+
+.hero-description strong{
+    color:white;
+}
+
+/* =========================================================
+   USER BOX
+========================================================= */
+
+.user-box{
+
+    border:
+        1px solid rgba(255,255,255,.35);
+
+    padding:20px;
+
+    min-height:210px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.05),
+            transparent
+        );
+
+    position:relative;
+
+    transition:.2s;
+}
+
+.user-box::before{
+
+    content:"ERR://USER";
+
+    position:absolute;
+
+    top:7px;
+
+    right:9px;
+
+    color:#444;
+
+    font-size:7px;
+}
+
+.user-box:hover{
+
+    transform:
+        translate(-3px,-3px);
+
+    box-shadow:
+        5px 5px 0
+        rgba(255,255,255,.2);
+}
+
+.user-title{
+
+    font-size:9px;
+
+    border-bottom:
+        1px solid #444;
+
+    padding-bottom:10px;
+
+    margin-bottom:18px;
+}
+
+.user-name{
+
+    font-family:
+        "Special Elite",
+        serif;
+
+    font-size:22px;
+
+    margin-bottom:18px;
+}
+
+.user-lines{
+
+    color:#777;
+
+    font-size:9px;
+
+    line-height:2;
+}
+
+.user-lines b{
+    color:#aaa;
+}
+
+
+/* =========================================================
+   ARTIST
+========================================================= */
+
+.profile{
+
+    padding:110px 0;
+}
+
+.profile-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        .7fr
+        1.2fr
+        .7fr;
+
+    gap:35px;
+}
+
+
+/* =========================================================
+   SECTION LABEL
+========================================================= */
+
+.section-id{
+
+    font-size:9px;
+
+    color:#777;
+
+    margin-bottom:20px;
+
+    letter-spacing:.08em;
+}
+
+.section-title{
+
+    font-family:
+        "Special Elite",
+        serif;
+
+    font-size:45px;
+
+    line-height:.9;
+
+    text-transform:uppercase;
+}
+
+
+/* =========================================================
+   PROFILE TEXT
+========================================================= */
+
+.profile-text{
+
+    font-size:11px;
+
+    color:#aaa;
+
+    line-height:1.9;
+}
+
+.profile-text p{
+    margin-bottom:20px;
+}
+
+.profile-text strong{
+    color:white;
+}
+
+
+/* =========================================================
+   ARTIST IMAGE
+========================================================= */
+
+.artist-image{
+
+    height:470px;
+
+    border:
+        1px solid #444;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:#080808;
+}
+
+.artist-image::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 12px,
+            rgba(255,255,255,.025) 13px 14px
+        );
+
+    z-index:2;
+
+    pointer-events:none;
+}
+
+.artist-image::after{
+
+    content:"SIGNAL // 001";
+
+    position:absolute;
+
+    top:12px;
+
+    right:12px;
+
+    color:#aaa;
+
+    font-size:7px;
+
+    z-index:4;
+}
+
+.artist-image img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:none;
+
+    opacity:1;
+
+    transition:.2s;
+}
+
+.artist-image:hover img{
+
+    animation:
+        imageGlitch .22s steps(2) infinite;
+
+    filter:
+        grayscale(1)
+        contrast(2)
+        brightness(.9);
+}
+
+.artist-image:hover::before{
+
+    animation:
+        imageScanlines .18s steps(2) infinite;
+
+    opacity:.8;
+}
+
+.image-text{
+
+    position:absolute;
+
+    bottom:15px;
+    left:15px;
+
+    z-index:4;
+
+    font-size:9px;
+
+    color:#ccc;
+}
+
+
+/* =========================================================
+   CREATOR DATA
+========================================================= */
+
+.creator{
+
+    border-left:
+        1px solid #333;
+
+    padding-left:25px;
+}
+
+.creator-name{
+
+    font-family:
+        "Special Elite",
+        serif;
+
+    font-size:30px;
+
+    margin-bottom:8px;
+}
+
+.creator-role{
+
+    color:#777;
+
+    font-size:9px;
+
+    margin-bottom:35px;
+}
+
+.skills{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+}
+
+.skill{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr auto;
+
+    gap:10px;
+
+    font-size:9px;
+
+    color:#aaa;
+}
+
+.skill span:last-child{
+
+    color:white;
+
+    letter-spacing:2px;
+}
+
+
+/* =========================================================
+   TERMINAL
+========================================================= */
+
+.terminal{
+
+    margin-top:35px;
+
+    border:
+        1px solid #333;
+
+    padding:18px;
+
+    background:#030303;
+
+    font-size:9px;
+
+    line-height:1.8;
+
+    color:#777;
+}
+
+.terminal .white{
+    color:#ddd;
+}
+
+
+/* =========================================================
+   WORK
+========================================================= */
+
+.work{
+
+    padding:110px 0;
+}
+
+.work-header{
+
+    display:grid;
+
+    grid-template-columns:
+        .35fr
+        1fr;
+
+    gap:50px;
+
+    margin-bottom:50px;
+}
+
+.work-info{
+
+    color:#777;
+
+    font-size:9px;
+
+    line-height:2;
+}
+
+.work-title{
+
+    font-family:
+        "Special Elite",
+        serif;
+
+    font-size:
+        clamp(55px,7vw,90px);
+
+    line-height:.8;
+}
+
+
+/* =========================================================
+   WORK CATEGORIES
+========================================================= */
+
+.work-category{
+
+    margin-bottom:100px;
+
+    position:relative;
+}
+
+.category-heading{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-end;
+
+    border-bottom:
+        1px solid #333;
+
+    padding-bottom:14px;
+
+    margin-bottom:18px;
+}
+
+.category-heading h3{
+
+    font-family:
+        "Special Elite",
+        serif;
+
+    font-size:28px;
+
+    text-transform:uppercase;
+}
+
+.category-code{
+
+    color:#555;
+
+    font-size:8px;
+
+    letter-spacing:.08em;
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(6,minmax(0,1fr));
+
+    gap:10px;
+}
+
+.work-card{
+
+    position:relative;
+
+    aspect-ratio:1 / 1;
+
+    height:auto;
+
+    border:
+        1px solid #444;
+
+    overflow:hidden;
+
+    background:#050505;
+}
+
+.work-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            transparent 50%,
+            rgba(0,0,0,.9)
+        );
+
+    pointer-events:none;
+
+    z-index:2;
+}
+
+.work-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:3;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0 9px,
+            rgba(255,255,255,.28) 10px,
+            transparent 11px 17px
+        );
+
+    mix-blend-mode:screen;
+
+}
+
+.work-image{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:
+        contrast(1.1)
+        brightness(.9);
+
+    transition:.35s;
+}
+
+.work-card:hover .work-image{
+
+    transform:scale(1.04);
+
+    filter:
+        grayscale(1)
+        contrast(2)
+        brightness(.9);
+}
+
+.work-card:hover::before{
+
+    opacity:.75;
+
+    animation:
+        imageScanlines .18s steps(2) infinite;
+}
+
+.work-card:hover{
+
+    animation:
+        cardGlitch .15s steps(2);
+}
+
+@keyframes cardGlitch{
+
+    0%{
+        transform:translate(0);
+    }
+
+    30%{
+        transform:translate(-4px,1px);
+    }
+
+    60%{
+        transform:translate(4px,-1px);
+    }
+
+    100%{
+        transform:translate(0);
+    }
+}
+
+@keyframes imageGlitch{
+
+    0%{
+        transform:translate(0,0) scale(1.04);
+    }
+
+    25%{
+        transform:translate(-5px,2px) scale(1.08) skewX(2deg);
+    }
+
+    50%{
+        transform:translate(5px,-2px) scale(1.05) skewX(-3deg);
+    }
+
+    75%{
+        transform:translate(-2px,3px) scale(1.1);
+    }
+
+    100%{
+        transform:translate(0,0) scale(1.04);
+    }
+
+}
+
+@keyframes imageScanlines{
+
+    0%{
+        transform:translate(0,0);
+        clip-path:inset(0 0 70% 0);
+    }
+
+    50%{
+        transform:translate(7px,-3px);
+        clip-path:inset(35% 0 25% 0);
+    }
+
+    100%{
+        transform:translate(-6px,4px);
+        clip-path:inset(72% 0 0 0);
+    }
+
+}
+
+.work-label{
+
+    position:absolute;
+
+    left:15px;
+    bottom:15px;
+
+    z-index:4;
+
+    font-size:9px;
+
+    letter-spacing:1px;
+}
+
+.work-number{
+
+    position:absolute;
+
+    top:15px;
+    right:15px;
+
+    z-index:4;
+
+    font-size:9px;
+
+    color:#aaa;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.work-placeholder{
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #050505 0 8px,
+            #111 9px 10px
+        );
+
+    color:#555;
+
+    font-size:9px;
+
+    letter-spacing:.1em;
+}
+
+.art-slot{
+
+    cursor:pointer;
+
+}
+
+.art-slot input[type="file"]{
+
+    position:absolute;
+
+    right:8px;
+    bottom:8px;
+
+    z-index:5;
+
+    width:72px;
+    height:24px;
+
+    opacity:.01;
+
+    cursor:pointer;
+
+}
+
+.art-slot .work-placeholder{
+
+    position:absolute;
+
+    inset:0;
+
+}
+
+.art-slot .work-image{
+
+    position:relative;
+
+    z-index:1;
+
+}
+
+.art-slot img,
+.artist-image img,
+.art-viewer-stage img{
+
+    -webkit-user-drag:none;
+    user-select:none;
+    -webkit-user-select:none;
+    -webkit-touch-callout:none;
+
+}
+
+.art-slot .work-label,
+.art-slot .work-number{
+
+    pointer-events:none;
+
+}
+
+.art-slot .work-label{
+
+    opacity:0;
+    transform:translateY(4px);
+
+    transition:opacity .15s ease,transform .15s ease;
+
+}
+
+.art-slot:hover .work-label,
+.art-slot:focus-within .work-label{
+
+    opacity:1;
+    transform:translateY(0);
+
+}
+
+
+/* =========================================================
+   STATEMENT
+========================================================= */
+
+.statement{
+
+    padding:120px 0;
+
+    min-height:450px;
+
+    display:flex;
+
+    align-items:center;
+
+    overflow:hidden;
+}
+
+.statement-content{
+
+    position:relative;
+
+    z-index:3;
+
+    max-width:1000px;
+}
+
+.statement-id{
+
+    font-size:9px;
+
+    color:#777;
+
+    margin-bottom:30px;
+}
+
+.statement-text{
+
+    font-family:
+        "Special Elite",
+        serif;
+
+    font-size:
+        clamp(30px,4vw,60px);
+
+    line-height:1.1;
+}
+
+.statement-text em{
+    color:#888;
+}
+
+
+/* =========================================================
+   VOID
+========================================================= */
+
+.void{
+
+    min-height:550px;
+
+    padding:100px 0;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+}
+
+.void-center{
+
+    text-align:center;
+
+    position:relative;
+
+    z-index:3;
+}
+
+.void-symbol{
+
+    font-size:120px;
+
+    color:#777;
+
+    animation:
+        float 4s infinite ease-in-out;
+}
+
+@keyframes float{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:
+            translateY(-15px)
+            rotate(3deg);
+    }
+}
+
+.void-text{
+
+    margin-top:25px;
+
+    font-size:10px;
+
+    color:#666;
+
+    line-height:2;
+}
+
+.secret{
+
+    color:#111;
+
+    min-height:1.5em;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:opacity .12s linear,color .12s linear;
+
+    margin-top:40px;
+
+    font-size:9px;
+}
+
+.secret.is-visible{
+
+    color:#aaa;
+    opacity:1;
+    visibility:visible;
+
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact{
+
+    padding:110px 0 70px;
+}
+
+.contact-title{
+
+    font-family:
+        "Special Elite",
+        serif;
+
+    font-size:
+        clamp(55px,7vw,90px);
+
+    line-height:.8;
+}
+
+.contact-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:70px;
+}
+
+.contact-description{
+
+    margin-top:25px;
+
+    font-size:10px;
+
+    color:#777;
+
+    line-height:2;
+}
+
+
+/* =========================================================
+   SOCIAL BOXES
+========================================================= */
+
+.social-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+}
+
+.social-box{
+
+    min-height:120px;
+
+    width:100%;
+
+    padding:0;
+
+    color:inherit;
+
+    font:inherit;
+
+    cursor:pointer;
+
+    border:
+        1px solid #333;
+
+    background:#050505;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:.15s;
+}
+
+.social-box svg{
+
+    width:32px;
+    height:32px;
+
+    fill:none;
+
+    stroke:#aaa;
+
+    stroke-width:1.5;
+
+    transition:.15s;
+}
+
+.social-box:hover{
+
+    background:white;
+
+    color:black;
+
+    transform:
+        translate(-2px,-2px);
+
+    border-color:white;
+}
+
+.social-box:hover svg{
+
+    stroke:black;
+
+    transform:
+        scale(1.15)
+        skewX(-8deg);
+}
+
+.social-box::after{
+
+    content:"OPEN";
+
+    position:absolute;
+
+    right:7px;
+    bottom:6px;
+
+    color:#444;
+
+    font-size:6px;
+}
+
+.welcome-window{
+
+    position:fixed;
+
+    z-index:1000;
+
+    top:50%;
+    left:50%;
+
+    width:min(350px,calc(100vw - 32px));
+
+    color:var(--white);
+    background:var(--dark);
+
+    border:1px solid #aaa;
+    box-shadow:8px 8px 0 rgba(0,0,0,.7);
+
+    transform:translate(-50%,-50%);
+
+}
+
+.welcome-window[hidden]{
+    display:none;
+}
+
+.welcome-window-header{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+
+    padding:10px 12px;
+
+    border-bottom:1px solid var(--line);
+
+    font-size:9px;
+    letter-spacing:1px;
+
+    cursor:grab;
+    touch-action:none;
+    user-select:none;
+
+}
+
+.welcome-window-header:active{
+    cursor:grabbing;
+}
+
+.welcome-window-controls{
+
+    display:flex;
+    gap:5px;
+
+}
+
+.welcome-window-controls button{
+
+    width:24px;
+    height:22px;
+    padding:0;
+
+    color:var(--light);
+    background:transparent;
+    border:1px solid var(--gray);
+
+    font:inherit;
+    cursor:pointer;
+
+}
+
+.welcome-window-controls button:hover{
+
+    color:var(--black);
+    background:var(--white);
+
+}
+
+.welcome-window-body{
+
+    padding:20px;
+
+}
+
+.welcome-window-body h2{
+
+    margin:0;
+
+    font-family:"Special Elite",serif;
+    font-size:24px;
+    font-weight:normal;
+
+}
+
+.welcome-window-body p{
+
+    margin:12px 0 0;
+
+    color:#888;
+    font-size:9px;
+    line-height:1.8;
+
+}
+
+.welcome-window.is-minimized .welcome-window-header{
+    border-bottom:0;
+}
+
+.welcome-window.is-minimized .welcome-window-body{
+    display:none;
+}
+
+.discord-modal{
+
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    max-height:calc(100vh - 32px);
+
+    margin:0;
+
+    transform:translate(-50%,-50%);
+
+    width:min(420px,calc(100% - 32px));
+
+    padding:0;
+
+    color:var(--white);
+
+    background:var(--dark);
+
+    border:1px solid #aaa;
+
+    box-shadow:8px 8px 0 rgba(0,0,0,.7);
+
+}
+
+.discord-modal::backdrop{
+
+    background:rgba(0,0,0,.78);
+
+}
+
+.discord-modal-content{
+
+    padding:18px;
+
+}
+
+.discord-modal-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding-bottom:12px;
+
+    border-bottom:1px solid var(--line);
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
+}
+
+.discord-modal-close{
+
+    padding:2px 5px;
+
+    color:var(--light);
+
+    background:transparent;
+
+    border:1px solid var(--gray);
+
+    font:inherit;
+
+    cursor:pointer;
+
+}
+
+.discord-modal-close:hover{
+
+    color:var(--black);
+
+    background:var(--white);
+
+}
+
+.art-viewer{
+
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    width:min(94vw,1100px);
+    height:min(92vh,800px);
+
+    margin:0;
+    padding:0;
+
+    color:var(--white);
+    background:var(--dark);
+
+    border:1px solid #aaa;
+    box-shadow:8px 8px 0 rgba(0,0,0,.7);
+
+    transform:translate(-50%,-50%);
+
+}
+
+.art-viewer::backdrop{
+
+    background:rgba(0,0,0,.88);
+
+}
+
+.art-viewer-backdrop{
+
+    position:absolute;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+
+}
+
+.art-viewer-backdrop img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    opacity:.14;
+    filter:grayscale(1) blur(18px);
+    transform:scale(1.08);
+
+}
+
+.art-viewer-content{
+
+    position:relative;
+    z-index:1;
+
+    display:flex;
+    flex-direction:column;
+
+    height:100%;
+    padding:18px;
+    gap:12px;
+
+}
+
+.art-viewer-controls{
+
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:5px;
+
+}
+
+.art-viewer-controls button{
+
+    min-width:34px;
+    height:30px;
+
+    padding:2px 5px;
+
+    color:var(--light);
+    background:transparent;
+    border:1px solid var(--gray);
+
+    font:inherit;
+    font-size:9px;
+    cursor:pointer;
+
+}
+
+.art-viewer-controls button:hover{
+
+    color:var(--black);
+    background:var(--white);
+
+}
+
+.art-viewer-stage{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    min-height:0;
+    flex:1;
+    margin-top:0;
+
+    overflow:hidden;
+    background:rgba(0,0,0,.32);
+    touch-action:none;
+    scrollbar-width:none;
+
+}
+
+.art-viewer-stage::-webkit-scrollbar{
+    display:none;
+}
+
+.art-viewer-stage.is-zoomed{
+    cursor:grab;
+}
+
+.art-viewer-stage.is-panning{
+    cursor:grabbing;
+
+}
+
+.art-viewer-stage img{
+
+    max-width:100%;
+    max-height:100%;
+
+    object-fit:contain;
+    transform-origin:center;
+    cursor:inherit;
+    user-select:none;
+    -webkit-user-drag:none;
+    transition:scale .2s ease;
+
+}
+
+.art-viewer-stage:hover img{
+    scale:1.025;
+
+}
+
+.art-viewer-info{
+
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:10px;
+
+    padding-top:10px;
+    border-top:1px solid var(--line);
+
+}
+
+.art-viewer-info div{
+    min-width:0;
+}
+
+.art-viewer-info dt{
+
+    margin-bottom:4px;
+
+    color:#777;
+    font-size:7px;
+    letter-spacing:1px;
+
+}
+
+.art-viewer-info dd{
+
+    overflow-wrap:anywhere;
+
+    color:#ddd;
+    font-size:8px;
+    line-height:1.5;
+
+}
+
+.art-viewer-info .art-info-description{
+    grid-column:span 2;
+}
+
+.discord-username{
+
+    margin-top:20px;
+
+    color:var(--white);
+
+    font-size:18px;
+
+    text-align:center;
+
+}
+
+.email{
+
+    margin-top:25px;
+
+    text-align:right;
+
+    font-size:10px;
+
+    color:#777;
+
+    letter-spacing:1px;
+}
+
+.email a:hover{
+    color:white;
+}
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+.audio-player{
+
+    margin-top:70px;
+
+    border:
+        1px solid #444;
+
+    padding:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    background:#050505;
+}
+
+.audio-icon{
+
+    width:45px;
+    height:45px;
+
+    border:
+        1px solid #777;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    font-size:18px;
+}
+
+.audio-info{
+    flex:1;
+}
+
+.audio-info small{
+
+    color:#666;
+
+    font-size:8px;
+}
+
+.audio-info strong{
+
+    display:block;
+
+    font-size:10px;
+
+    margin-top:5px;
+}
+
+.audio-button{
+
+    border:
+        1px solid #777;
+
+    background:none;
+
+    color:white;
+
+    padding:
+        8px 15px;
+
+    font-family:inherit;
+
+    font-size:9px;
+
+    cursor:pointer;
+}
+
+.audio-button:hover{
+
+    background:white;
+
+    color:black;
+}
+
+.music-dock{
+
+    position:fixed;
+
+    right:18px;
+    bottom:18px;
+
+    z-index:10002;
+
+    display:grid;
+    gap:10px;
+
+    width:min(370px,calc(100vw - 32px));
+    padding:12px 14px;
+
+    color:var(--white);
+    background:rgba(5,5,5,.96);
+    border:1px solid #777;
+    box-shadow:5px 5px 0 rgba(0,0,0,.65);
+
+}
+
+.music-dock-header{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+
+}
+
+.music-dock-info{
+    min-width:0;
+    flex:1;
+}
+
+.music-dock-info small{
+
+    color:#777;
+    font-size:8px;
+
+}
+
+.music-dock-title{
+
+    display:block;
+    overflow:hidden;
+    margin-top:4px;
+
+    font-size:9px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+
+}
+
+.music-dock-button{
+
+    min-width:0;
+    padding:8px 10px;
+
+    color:var(--white);
+    background:transparent;
+    border:1px solid var(--gray);
+
+    font:inherit;
+    font-size:14px;
+    line-height:1;
+    cursor:pointer;
+
+}
+
+.music-dock-controls{
+
+    display:grid;
+    grid-template-columns:1fr 1.2fr 1fr;
+    gap:6px;
+
+}
+
+.music-dock-controls button{
+
+    min-height:30px;
+    padding:6px 8px;
+
+    color:var(--white);
+    background:transparent;
+    border:1px solid var(--gray);
+
+    font:inherit;
+    font-size:12px;
+    cursor:pointer;
+
+}
+
+.music-dock-controls button:hover{
+
+    color:var(--black);
+    background:var(--white);
+
+}
+
+.music-dock-timeline{
+
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    align-items:center;
+    gap:8px;
+
+    color:#888;
+    font-size:8px;
+
+}
+
+.music-dock-timeline input{
+
+    width:100%;
+    height:4px;
+
+    accent-color:#aaa;
+    cursor:pointer;
+
+}
+
+.equalizer{
+
+    display:flex;
+
+    gap:2px;
+
+    align-items:end;
+
+    height:25px;
+
+    opacity:.3;
+}
+
+.audio-player.playing .equalizer{
+    opacity:1;
+}
+
+.equalizer span{
+
+    width:3px;
+
+    height:4px;
+
+    background:#aaa;
+}
+
+.audio-player.playing
+.equalizer span{
+
+    animation:
+        eq .8s infinite alternate;
+}
+
+.equalizer span:nth-child(2){
+    animation-delay:.2s;
+}
+
+.equalizer span:nth-child(3){
+    animation-delay:.4s;
+}
+
+.equalizer span:nth-child(4){
+    animation-delay:.1s;
+}
+
+.equalizer span:nth-child(5){
+    animation-delay:.5s;
+}
+
+@keyframes eq{
+
+    from{
+        height:4px;
+    }
+
+    to{
+        height:22px;
+    }
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    border-top:
+        1px solid #333;
+
+    padding:
+        25px 0;
+
+    font-size:8px;
+
+    color:#555;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .hero-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .user-box{
+        grid-column:1 / -1;
+        max-width:500px;
+    }
+
+    .profile-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .creator{
+        grid-column:1 / -1;
+
+        border-left:0;
+
+        border-top:
+            1px solid #333;
+
+        padding-left:0;
+
+        padding-top:30px;
+    }
+
+    .gallery{
+        grid-template-columns:repeat(4,minmax(0,1fr));
+    }
+
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+
+@media(max-width:750px){
+
+    header{
+        padding:12px 5%;
+    }
+
+    .status{
+        min-width:0;
+
+        font-size:8px;
+    }
+
+    .hero-grid{
+        grid-template-columns:1fr;
+    }
+
+    .main-logo{
+        width:80%;
+    }
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .creator{
+        grid-column:auto;
+    }
+
+    .artist-image{
+        height:400px;
+    }
+
+    .gallery{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .social-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .category-heading{
+        display:block;
+    }
+
+    .category-code{
+        display:block;
+
+        margin-top:8px;
+    }
+
+    footer{
+        flex-direction:column;
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .art-viewer-content{
+        padding:12px;
+        gap:10px;
+    }
+
+    .art-viewer-info{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .art-viewer-info .art-info-description{
+        grid-column:1 / -1;
+    }
+
+    .hero{
+        padding-top:100px;
+    }
+
+    .hero-title{
+        font-size:42px;
+    }
+
+    .main-logo{
+        width:100%;
+    }
+
+    .social-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .audio-player{
+        flex-wrap:wrap;
+    }
+
+    .audio-info{
+        min-width:calc(100% - 70px);
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.001ms !important;
+
+        animation-iteration-count:1 !important;
+
+        scroll-behavior:auto !important;
+    }
+
+    .particle{
+        animation-name:particleFloat !important;
+        animation-duration:var(--particle-duration) !important;
+        animation-timing-function:linear !important;
+        animation-delay:var(--particle-delay) !important;
+        animation-iteration-count:infinite !important;
+    }
+
+    .particle-field.is-audio-fast .particle{
+        animation-duration:var(--particle-fast-duration) !important;
+    }
+
+    .particle-field.is-audio-faster .particle{
+        animation-duration:var(--particle-faster-duration) !important;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="background-glow" aria-hidden="true"></div>
+<div class="background-static" aria-hidden="true"></div>
+<div class="particle-field" id="particleField" aria-hidden="true"></div>
+<div class="particle-field is-foreground" id="particleForeground" aria-hidden="true"></div>
+
+<div class="flash" id="flash"></div>
+
+<div class="glitch-bar"></div>
+<div class="glitch-bar"></div>
+<div class="glitch-bar"></div>
+
+
+<!-- DECORACIÓN GLOBAL -->
+
+<div class="chain-field" id="chainField" aria-hidden="true"></div>
+
+<div class="symbol s1">♣</div>
+<div class="symbol s2">✦</div>
+<div class="symbol s3">♣</div>
+<div class="symbol s4">✦</div>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+    <a
+        href="#home"
+        class="logo-mini"
+    >
+        VIVENEBRI_ARCHIVE.exe
+    </a>
+
+    <div
+        class="status"
+        id="systemStatus"
+    >
+        SYSTEM_ONLINE
+    </div>
+
+</header>
+
+
+<main>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section
+    class="hero"
+    id="home"
+>
+
+    <div class="container hero-grid">
+
+
+        <!-- LOGO -->
+
+        <div class="logo-area">
+
+            <img
+                class="main-logo"
+                src="assets/art/LOGO.png"
+                alt="Vivenebri"
+            >
+
+            <div class="logo-error">
+                // IMAGE_LOADED<br>
+                // CREATOR_SIGNATURE_DETECTED
+            </div>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <div>
+
+            <div class="section-id">
+                00 // ARCHIVE_ENTRY
+            </div>
+
+            <h1 class="hero-title">
+
+                <span
+                    class="glitch"
+                    data-text="THE DARK SIDE"
+                >
+                    THE DARK SIDE
+                </span>
+
+                <span
+                    class="glitch small"
+                    data-text="OF THE"
+                >
+                    OF THE
+                </span>
+
+                <span
+                    class="glitch"
+                    data-text="HEAVEN"
+                >
+                    HEAVEN
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Archivo personal de
+                <strong>Vivenebri</strong>.
+
+                <br><br>
+
+                Arte tradicional, arte digital,
+                animación, personajes, video,
+                experimentación y mundos que
+                probablemente deberían seguir
+                dentro del archivo.
+
+            </p>
+
+
+        </div>
+
+
+        <!-- USER BOX -->
+
+        <div
+            class="user-box"
+            id="userBox"
+        >
+
+            <div class="user-title">
+                CURRENT USER
+            </div>
+
+            <div
+                class="user-name glitch"
+                data-text="G0DS_MISTAKE"
+            >
+                G0DS_MISTAKE
+            </div>
+
+            <div class="user-lines">
+
+                <div>
+                    &gt; access_level:
+                    <b>unknown</b>
+                </div>
+
+                <div>
+                    &gt; identity:
+                    <b>unstable</b>
+                </div>
+
+                <div>
+                    &gt; creativity:
+                    <b>active</b>
+                </div>
+
+                <div>
+                    &gt; heaven_connection:
+                    <b>ERROR</b>
+                </div>
+
+                <br>
+
+                <div>
+                    &gt; welcome_back.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ARTIST
+========================================================= -->
+
+<section
+    class="profile"
+    id="artist"
+>
+
+    <div class="container profile-grid">
+
+
+        <div>
+
+            <div class="section-id">
+                01 // ARTIST_PROFILE
+            </div>
+
+            <h2 class="section-title glitch"
+                data-text="WHO AM I?">
+
+                WHO<br>
+                AM I?
+
+            </h2>
+
+            <div class="profile-text">
+
+                <p>
+                    Mi nombre es
+                    <strong>Vivenebri</strong>.
+                </p>
+
+                <p>
+                    Soy un artista interesado en
+                    convertir ideas, personajes,
+                    emociones y mundos imaginarios
+                    en imágenes.
+                </p>
+
+                <p>
+                    Mi trabajo se mueve entre el
+                    dibujo tradicional, el arte digital,
+                    la animación, el diseño de personajes,
+                    el video experimental y el modelado 3D.
+                </p>
+
+                <p>
+                    Me interesa especialmente aquello
+                    que se encuentra entre lo familiar
+                    y lo extraño: el horror, los espacios
+                    liminales, la tecnología, los errores
+                    digitales, los videojuegos, las
+                    pantallas antiguas y las historias
+                    que parecen estar incompletas.
+                </p>
+
+                <p>
+                    No busco que todo sea perfecto.
+                    Me interesa que una imagen tenga
+                    algo que decir incluso cuando
+                    parece estar fallando.
+                </p>
+
+                <strong>
+                    SOMETIMES THE ERROR
+                    <br>
+                    IS THE ART.
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE -->
+
+        <div class="artist-image">
+
+            <img
+                src="assets/art/VALDRIC.png"
+                alt="Valdric"
+                draggable="false"
+                loading="lazy"
+                decoding="async"
+            >
+
+            <div class="image-text">
+
+                // CREATOR_CAPTURE_001<br>
+                // SIGNAL_UNSTABLE
+
+            </div>
+
+        </div>
+
+
+        <!-- CREATOR -->
+
+        <div class="creator">
+
+            <div class="section-id">
+                03 // CREATOR_ID
+            </div>
+
+            <div class="creator-name glitch"
+                 data-text="VIVENEBRI">
+
+                VIVENEBRI
+
+            </div>
+
+            <div class="creator-role">
+
+                DIGITAL ARTIST //<br>
+                TRADITIONAL ARTIST //<br>
+                ANIMATOR //<br>
+                STORYTELLER
+
+            </div>
+
+
+            <div class="skills">
+
+                <div class="skill">
+                    <span>TRADITIONAL ART</span>
+                    <span>██████</span>
+                </div>
+
+                <div class="skill">
+                    <span>DIGITAL ART</span>
+                    <span>██████</span>
+                </div>
+
+                <div class="skill">
+                    <span>ANIMATION</span>
+                    <span>█████░</span>
+                </div>
+
+                <div class="skill">
+                    <span>CHARACTER DESIGN</span>
+                    <span>██████</span>
+                </div>
+
+                <div class="skill">
+                    <span>VIDEO</span>
+                    <span>█████░</span>
+                </div>
+
+                <div class="skill">
+                    <span>3D / MODELING</span>
+                    <span>████░░</span>
+                </div>
+
+            </div>
+
+
+            <div class="terminal">
+
+                <div>
+                    &gt; cat artist_profile.txt
+                </div>
+
+                <br>
+
+                <div class="white">
+                    NAME: VIVENEBRI
+                </div>
+
+                <div>
+                    ALIAS: G0DS_MISTAKE
+                </div>
+
+                <div>
+                    OCCUPATION: ARTIST
+                </div>
+
+                <div>
+                    PRIMARY_TOOL: IMAGINATION
+                </div>
+
+                <div>
+                    REALITY_CHECK: FAILED
+                </div>
+
+                <div>
+                    HEAVEN_CONNECTION: UNKNOWN
+                </div>
+
+                <div>
+                    STATUS: CREATING...
+                </div>
+
+                <br>
+
+                <div>
+                    &gt; _
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     DISCIPLINES
+========================================================= -->
+
+<section class="work">
+
+    <div class="container">
+
+        <div class="work-header">
+
+            <div>
+
+                <div class="section-id">
+                    02 // CREATIVE_SYSTEM
+                </div>
+
+                <div class="work-info">
+
+                    disciplines: 01<br>
+                    files_found: ∞<br>
+                    corrupted: unknown<br>
+                    creator: VIVENEBRI
+
+                </div>
+
+            </div>
+
+            <h2
+                class="work-title glitch"
+                data-text="CREATIVE SYSTEM"
+            >
+
+                CREATIVE<br>
+                SYSTEM
+
+            </h2>
+
+        </div>
+
+        <!-- =================================================
+             ART
+        ================================================== -->
+
+        <div
+            class="work-category"
+            id="art"
+        >
+
+            <div class="category-heading">
+
+                <h3
+                    class="glitch"
+                    data-text="ART"
+                >
+                    ART
+                </h3>
+
+                <span class="category-code">
+                    FILE_001 // IMAGE_ARCHIVE
+                </span>
+
+            </div>
+
+            <div class="gallery">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================================
+     ARTIST STATEMENT
+========================================================= -->
+
+<section class="statement">
+
+    <div class="container statement-content">
+
+        <div class="statement-id">
+            04 // ARTIST_STATEMENT
+        </div>
+
+        <div class="statement-text">
+
+            I don't want to make
+            perfect worlds.
+
+            <br><br>
+
+            I want to make worlds
+            that feel like they
+            <em>remember you.</em>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     VOID
+========================================================= -->
+
+<section
+    class="void"
+    id="void"
+>
+
+    <div class="container void-center">
+
+        <div
+            class="void-symbol glitch"
+            data-text="♣"
+        >
+            ♣
+        </div>
+
+        <div class="void-text">
+
+            THE JESTER KNOWS.<br>
+            THE ARCHIVE REMEMBERS.<br>
+            THE SHOW HAS NOT ENDED.
+
+        </div>
+
+        <div
+            class="secret glitch"
+            id="secretSignal"
+            aria-live="polite"
+        >
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section
+    class="contact"
+    id="contact"
+>
+
+    <div class="container">
+
+
+        <div class="contact-grid">
+
+
+            <div>
+
+                <div class="section-id">
+                    05 // CONTACT
+                </div>
+
+                <h2 class="contact-title glitch"
+                    data-text="FIND ME">
+
+                    FIND<br>
+                    ME
+
+                </h2>
+
+                <p class="contact-description">
+
+                    Mi ser está más allá de esta página...
+
+                    <br><br>
+
+                    Si quieres encontrar el resto,
+                    ya sabes dónde buscar.
+
+                </p>
+
+            </div>
+
+
+            <!-- SOCIALS -->
+
+            <div>
+
+                <div class="social-grid">
+
+
+                    <!-- X -->
+
+                    <a
+                        href="https://x.com/vivenebri?lang=es"
+                        class="social-box"
+                        aria-label="X"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M5 4l14 16M19 4L5 20"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                    <!-- INSTAGRAM -->
+
+                    <a
+                        href="https://www.instagram.com/vivenebri/"
+                        class="social-box"
+                        aria-label="Instagram"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <rect
+                                x="3"
+                                y="3"
+                                width="18"
+                                height="18"
+                                rx="5"
+                            />
+
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="4"
+                            />
+
+                            <circle
+                                cx="17.5"
+                                cy="6.5"
+                                r="1"
+                                fill="#aaa"
+                                stroke="none"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                    <!-- TIKTOK -->
+
+                    <a
+                        href="https://www.tiktok.com/@v4ldric"
+                        class="social-box"
+                        aria-label="TikTok"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M14 4v10.5a4.5 4.5 0 1 1-4-4.47"
+                            />
+
+                            <path
+                                d="M14 4c1 3 2.5 4.5 5 4.8"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                    <!-- KO-FI -->
+
+                    <a
+                        href="https://ko-fi.com/vivenebri"
+                        class="social-box"
+                        aria-label="Ko-fi"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M4 8h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z"
+                            />
+
+                            <path
+                                d="M16 10h2a2 2 0 0 1 0 4h-2"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                    <!-- DEVIANTART -->
+
+                    <a
+                        href="https://www.deviantart.com/vivenebri/gallery"
+                        class="social-box"
+                        aria-label="DeviantArt"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M15 4l-2 3H7v4h4l-3 5H4v4h6l3-5h5v-4h-3l3-5V4h-3Z"
+                            />
+
+                        </svg>
+
+                    </a>
+
+
+                    <!-- DISCORD -->
+
+                    <button
+                        type="button"
+                        class="social-box"
+                        aria-label="Discord"
+                        aria-haspopup="dialog"
+                        aria-controls="discordModal"
+                    >
+
+                        <svg viewBox="0 0 24 24">
+
+                            <path
+                                d="M5 6.5A14 14 0 0 1 9 5l.7 1.3a13 13 0 0 1 4.6 0L15 5a14 14 0 0 1 4 1.5c1.2 2.5 1.7 5.2 1.5 8A13 13 0 0 1 16 17l-1.5-2"
+                            />
+
+                            <path
+                                d="M8 14c2.5 1.5 5.5 1.5 8 0"
+                            />
+
+                            <circle
+                                cx="9"
+                                cy="11"
+                                r=".8"
+                                fill="#aaa"
+                                stroke="none"
+                            />
+
+                            <circle
+                                cx="15"
+                                cy="11"
+                                r=".8"
+                                fill="#aaa"
+                                stroke="none"
+                            />
+
+                        </svg>
+
+                    </button>
+
+                </div>
+
+
+                <div class="email">
+
+                    <a href="mailto:vivenebri@gmail.com">
+                        VIVENEBRI@GMAIL.COM
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AUDIO -->
+
+        <div class="audio-player">
+
+            <div class="audio-icon">
+                ♫
+            </div>
+
+            <div class="audio-info">
+
+                <small>
+                    AUDIO // BACKGROUND_SIGNAL
+                </small>
+
+                <strong>
+                    VIVENEBRI // ARCHIVE AUDIO
+                </strong>
+
+            </div>
+
+            <button
+                class="audio-button"
+                id="audioButton"
+            >
+                PLAY
+            </button>
+
+            <div class="equalizer">
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<aside
+    class="welcome-window"
+    id="welcomeWindow"
+    aria-label="Welcome back"
+>
+
+    <div class="welcome-window-header" id="welcomeWindowHandle">
+
+        <span>WELCOME // BACK</span>
+
+        <div class="welcome-window-controls">
+
+            <button
+                type="button"
+                id="welcomeWindowMinimize"
+                aria-label="Minimizar ventana"
+                aria-expanded="true"
+            >−</button>
+
+            <button
+                type="button"
+                id="welcomeWindowClose"
+                aria-label="Cerrar ventana"
+            >X</button>
+
+        </div>
+
+    </div>
+
+    <div class="welcome-window-body" id="welcomeWindowBody">
+
+        <h2>Welcome back</h2>
+
+        <p>THE DARK SIDE OF THE HEAVEN<br>VIVENEBRI // ARTIST ARCHIVE</p>
+
+    </div>
+
+</aside>
+
+
+<dialog
+    class="discord-modal"
+    id="discordModal"
+    aria-labelledby="discordModalTitle"
+>
+
+    <div class="discord-modal-content">
+
+        <div class="discord-modal-header">
+
+            <span id="discordModalTitle">
+                DISCORD // USER
+            </span>
+
+            <button
+                type="button"
+                class="discord-modal-close"
+                aria-label="Cerrar ventana"
+            >
+                X
+            </button>
+
+        </div>
+
+        <p class="discord-username">@god.s_mistake</p>
+
+    </div>
+
+</dialog>
+
+
+<dialog
+    class="art-viewer"
+    id="artViewer"
+    aria-labelledby="artViewerTitle"
+>
+
+    <div class="art-viewer-backdrop" aria-hidden="true">
+        <img id="artViewerBackdropImage" alt="" draggable="false">
+    </div>
+
+    <div class="art-viewer-content">
+
+        <div class="discord-modal-header">
+
+            <span id="artViewerTitle">
+                ART // INSPECT
+            </span>
+
+        </div>
+
+        <div class="art-viewer-stage">
+            <img id="artViewerImage" alt="Dibujo ampliado" draggable="false">
+        </div>
+
+        <div class="art-viewer-controls" aria-label="Controles de la obra">
+
+            <button type="button" id="artPrevious" aria-label="Dibujo anterior" title="Dibujo anterior">|◀</button>
+            <button type="button" id="zoomOut" aria-label="Alejar" title="Alejar">−</button>
+            <button type="button" id="zoomReset" aria-label="Restablecer zoom" title="Restablecer zoom">100%</button>
+            <button type="button" id="zoomIn" aria-label="Acercar" title="Acercar">+</button>
+            <button type="button" id="artNext" aria-label="Dibujo siguiente" title="Dibujo siguiente">▶|</button>
+            <button type="button" id="artViewerClose" aria-label="Cerrar ventana" title="Cerrar">X</button>
+
+        </div>
+
+        <dl class="art-viewer-info" aria-label="Ficha de la obra">
+
+            <div>
+                <dt>OBRA</dt>
+                <dd id="artInfoName">Sin especificar</dd>
+            </div>
+
+            <div>
+                <dt>AÑO DE CREACIÓN</dt>
+                <dd id="artInfoYear">Sin especificar</dd>
+            </div>
+
+            <div class="art-info-description">
+                <dt>INFORMACIÓN</dt>
+                <dd id="artInfoDescription">Sin información disponible</dd>
+            </div>
+
+            <div>
+                <dt>PROGRAMA</dt>
+                <dd id="artInfoSoftware">Sin especificar</dd>
+            </div>
+
+        </dl>
+
+    </div>
+
+</dialog>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="container">
+
+    <span>
+        © VIVENEBRI
+    </span>
+
+    <span>
+        G0DS_MISTAKE.exe
+    </span>
+
+    <span>
+        THE DARK SIDE OF THE HEAVEN
+    </span>
+
+</footer>
+
+
+<audio
+    id="bgMusic"
+    preload="metadata"
+    autoplay
+></audio>
+
+
+<aside class="music-dock" aria-label="Reproductor de música">
+
+    <div class="music-dock-header">
+
+        <div class="music-dock-info">
+
+            <small id="musicDockState">SIGNAL IDLE</small>
+
+            <span class="music-dock-title" id="musicTrackTitle">
+                Monochrome.mp3
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="music-dock-controls">
+
+        <button type="button" id="musicPrevious" aria-label="Pista anterior" title="Pista anterior">|◀</button>
+        <button type="button" class="music-dock-button" id="musicDockButton" aria-label="Reproducir música" aria-controls="bgMusic" aria-pressed="false" title="Reproducir">▶</button>
+        <button type="button" id="musicNext" aria-label="Pista siguiente" title="Pista siguiente">▶|</button>
+
+    </div>
+
+    <div class="music-dock-timeline">
+
+        <time id="musicCurrentTime">0:00</time>
+
+        <input
+            type="range"
+            id="musicSeek"
+            min="0"
+            max="0"
+            step="0.1"
+            value="0"
+            aria-label="Progreso de la pista"
+            aria-valuetext="0:00 de 0:00"
+        >
+
+        <time id="musicDuration">0:00</time>
+
+    </div>
+
+</aside>
+
+
+<script>
+
+const particleField =
+    document.getElementById("particleField");
+
+const particleForeground =
+    document.getElementById("particleForeground");
+
+const baseParticleCount = 8;
+const maxParticleCount = 42;
+const audioReactiveParticles = [];
+let lastActiveParticleCount = baseParticleCount;
+let lastParticlePopulationUpdate = 0;
+
+const chainField =
+    document.getElementById("chainField");
+
+for(let chainIndex = 0; chainIndex < 10; chainIndex++){
+
+    const chain =
+        document.createElement("span");
+
+    const isLeftSide =
+        chainIndex % 2 === 0;
+
+    const sidePosition =
+        isLeftSide
+            ? 3 + Math.random() * 31
+            : 66 + Math.random() * 31;
+
+    chain.className = "hanging-chain";
+    chain.style.left = `${sidePosition}%`;
+    chain.style.setProperty("--chain-width", `${10 + Math.random() * 14}px`);
+    chain.style.setProperty("--chain-length", `${24 + Math.random() * 54}vh`);
+    chain.style.setProperty("--chain-opacity", `${.34 + Math.random() * .3}`);
+    chain.style.setProperty("--link-width", `${10 + Math.random() * 8}px`);
+    chain.style.setProperty("--link-height", `${15 + Math.random() * 9}px`);
+    chain.style.setProperty("--chain-angle", `${Math.random() * 10 - 5}deg`);
+    chain.style.setProperty("--chain-swing", `${1.5 + Math.random() * 3.5}deg`);
+    chain.style.setProperty("--chain-duration", `${2.5 + Math.random() * 3}s`);
+    chain.style.setProperty("--chain-delay", `${-Math.random() * 3}s`);
+
+    chainField.append(chain);
+
+}
+
+for(let particleIndex = 0; particleIndex < maxParticleCount; particleIndex++){
+
+    const particle =
+        document.createElement("span");
+
+    const particleDuration =
+        9 + Math.random() * 9;
+
+    const particleStartPhase =
+        Math.random();
+
+    particle.className = "particle";
+    particle.style.setProperty("--particle-top", "110vh");
+    particle.style.setProperty("--particle-static-y", `${Math.random() * 100}vh`);
+    particle.style.setProperty("--particle-left", `${Math.random() * 100}%`);
+    particle.style.setProperty("--particle-width", `${7 + Math.random() * 22}px`);
+    particle.style.setProperty("--particle-height", `${7 + Math.random() * 22}px`);
+    particle.style.setProperty(
+        "--particle-radius",
+        `${35 + Math.random() * 30}% ${35 + Math.random() * 30}% ${35 + Math.random() * 30}% ${35 + Math.random() * 30}% / ${35 + Math.random() * 30}% ${35 + Math.random() * 30}% ${35 + Math.random() * 30}% ${35 + Math.random() * 30}%`
+    );
+    particle.style.setProperty("--particle-duration", `${particleDuration}s`);
+    particle.style.setProperty("--particle-fast-duration", `${particleDuration * .65}s`);
+    particle.style.setProperty("--particle-faster-duration", `${particleDuration * .35}s`);
+    particle.style.setProperty("--particle-delay", `${-particleStartPhase * particleDuration}s`);
+    particle.style.setProperty("--particle-sway-one", `${Math.random() * 180 - 90}px`);
+    particle.style.setProperty("--particle-sway-two", `${Math.random() * 180 - 90}px`);
+    particle.style.setProperty("--particle-drift", `${Math.random() * 180 - 90}px`);
+    particle.style.setProperty("--particle-opacity", `${.5 + Math.random() * .3}`);
+
+    const targetField =
+        particleIndex < 6 ? particleForeground : particleField;
+
+    particle.classList.toggle("is-active", particleIndex < baseParticleCount);
+    targetField.append(particle);
+    audioReactiveParticles.push(particle);
+
+}
+
+function updateParticleAudioEffects(level, force = false){
+
+    const activeCount =
+        Math.round(baseParticleCount + level * (maxParticleCount - baseParticleCount));
+
+    const now = performance.now();
+
+    if(force || now - lastParticlePopulationUpdate >= 150){
+
+        if(activeCount !== lastActiveParticleCount){
+
+            audioReactiveParticles.forEach((particle, index) => {
+                particle.classList.toggle("is-active", index < activeCount);
+            });
+
+            lastActiveParticleCount = activeCount;
+
+        }
+
+        lastParticlePopulationUpdate = now;
+
+    }
+
+    [particleField, particleForeground].forEach(field => {
+        field.classList.toggle("is-audio-fast", level >= .25);
+        field.classList.toggle("is-audio-faster", level >= .65);
+    });
+
+}
+
+const welcomeWindow =
+    document.getElementById("welcomeWindow");
+
+const welcomeWindowHandle =
+    document.getElementById("welcomeWindowHandle");
+
+const welcomeWindowMinimize =
+    document.getElementById("welcomeWindowMinimize");
+
+const welcomeWindowClose =
+    document.getElementById("welcomeWindowClose");
+
+welcomeWindowMinimize.addEventListener(
+    "click",
+    () => {
+
+        const isMinimized =
+            welcomeWindow.classList.toggle("is-minimized");
+
+        welcomeWindowMinimize.setAttribute(
+            "aria-expanded",
+            String(!isMinimized)
+        );
+
+        welcomeWindowMinimize.setAttribute(
+            "aria-label",
+            isMinimized ? "Restaurar ventana" : "Minimizar ventana"
+        );
+
+        welcomeWindowMinimize.textContent =
+            isMinimized ? "+" : "−";
+
+    }
+);
+
+welcomeWindowClose.addEventListener(
+    "click",
+    () => {
+        welcomeWindow.hidden = true;
+    }
+);
+
+let welcomeWindowDrag = null;
+
+welcomeWindowHandle.addEventListener(
+    "pointerdown",
+    event => {
+
+        if(event.target.closest("button")){
+            return;
+        }
+
+        const bounds =
+            welcomeWindow.getBoundingClientRect();
+
+        welcomeWindow.style.left = `${bounds.left}px`;
+        welcomeWindow.style.top = `${bounds.top}px`;
+        welcomeWindow.style.right = "auto";
+
+        welcomeWindowDrag = {
+            pointerId:event.pointerId,
+            offsetX:event.clientX - bounds.left,
+            offsetY:event.clientY - bounds.top
+        };
+
+        welcomeWindowHandle.setPointerCapture(event.pointerId);
+
+    }
+);
+
+welcomeWindowHandle.addEventListener(
+    "pointermove",
+    event => {
+
+        if(!welcomeWindowDrag || event.pointerId !== welcomeWindowDrag.pointerId){
+            return;
+        }
+
+        const bounds =
+            welcomeWindow.getBoundingClientRect();
+
+        const maxLeft =
+            Math.max(8, window.innerWidth - bounds.width - 8);
+
+        const maxTop =
+            Math.max(8, window.innerHeight - bounds.height - 8);
+
+        welcomeWindow.style.left = `${Math.max(8, Math.min(maxLeft, event.clientX - welcomeWindowDrag.offsetX))}px`;
+        welcomeWindow.style.top = `${Math.max(8, Math.min(maxTop, event.clientY - welcomeWindowDrag.offsetY))}px`;
+
+    }
+);
+
+function stopWelcomeWindowDrag(event){
+
+    if(welcomeWindowDrag?.pointerId === event.pointerId){
+        welcomeWindowDrag = null;
+    }
+
+}
+
+welcomeWindowHandle.addEventListener(
+    "pointerup",
+    stopWelcomeWindowDrag
+);
+
+welcomeWindowHandle.addEventListener(
+    "pointercancel",
+    stopWelcomeWindowDrag
+);
+
+const artCategory =
+    document.getElementById("art");
+
+const artGallery =
+    artCategory.querySelector(".gallery");
+
+const artViewer =
+    document.getElementById("artViewer");
+
+const artViewerImage =
+    document.getElementById("artViewerImage");
+
+const artViewerBackdropImage =
+    document.getElementById("artViewerBackdropImage");
+
+function preventArtworkTransfer(event){
+
+    if(
+        event.target instanceof Element &&
+        event.target.closest(".art-slot, .artist-image, .art-viewer-stage")
+    ){
+        event.preventDefault();
+    }
+
+}
+
+document.addEventListener("dragstart", preventArtworkTransfer);
+document.addEventListener("contextmenu", preventArtworkTransfer);
+
+const artViewerStage =
+    document.querySelector(".art-viewer-stage");
+
+const artInfoName =
+    document.getElementById("artInfoName");
+
+const artInfoYear =
+    document.getElementById("artInfoYear");
+
+const artInfoDescription =
+    document.getElementById("artInfoDescription");
+
+const artInfoSoftware =
+    document.getElementById("artInfoSoftware");
+
+const artworkMetadata = {};
+
+const artViewerClose =
+    document.getElementById("artViewerClose");
+
+const zoomOut =
+    document.getElementById("zoomOut");
+
+const zoomReset =
+    document.getElementById("zoomReset");
+
+const zoomIn =
+    document.getElementById("zoomIn");
+
+const artPrevious =
+    document.getElementById("artPrevious");
+
+const artNext =
+    document.getElementById("artNext");
+
+let artZoom = 1;
+let artPanX = 0;
+let artPanY = 0;
+let artPanPointer = null;
+let currentArtCard = null;
+
+function updateArtZoom(){
+
+    const maxPanX =
+        Math.max(0, (artViewerImage.clientWidth * artZoom - artViewerStage.clientWidth) / 2);
+
+    const maxPanY =
+        Math.max(0, (artViewerImage.clientHeight * artZoom - artViewerStage.clientHeight) / 2);
+
+    artPanX = Math.max(-maxPanX, Math.min(maxPanX, artPanX));
+    artPanY = Math.max(-maxPanY, Math.min(maxPanY, artPanY));
+
+    artViewerImage.style.transform =
+        `translate(${artPanX}px, ${artPanY}px) scale(${artZoom})`;
+
+    artViewerStage.classList.toggle("is-zoomed", artZoom > 1);
+
+    zoomReset.textContent =
+        `${Math.round(artZoom * 100)}%`;
+
+}
+
+function openArtViewer(image, card){
+
+    const fileName =
+        image.dataset.artworkFile || image.src.split("/").pop();
+
+    const artworkName =
+        image.dataset.artworkName ||
+        fileName.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ");
+
+    const metadata =
+        artworkMetadata[fileName] || {};
+
+    artViewerImage.src = image.src;
+    artViewerImage.alt = image.alt;
+    artViewerBackdropImage.src = image.src;
+    artInfoName.textContent = metadata.name || artworkName;
+    artInfoYear.textContent = metadata.year || "Sin especificar";
+    artInfoDescription.textContent = metadata.description || "Sin información disponible";
+    artInfoSoftware.textContent = metadata.software || "Sin especificar";
+    currentArtCard = card;
+    artZoom = 1;
+    artPanX = 0;
+    artPanY = 0;
+    updateArtZoom();
+    artViewer.showModal();
+
+}
+
+function showAdjacentArt(direction){
+
+    const cards =
+        [...artGallery.querySelectorAll(".art-slot")];
+
+    const currentIndex =
+        cards.indexOf(currentArtCard);
+
+    if(currentIndex < 0){
+        return;
+    }
+
+    const nextIndex =
+        (currentIndex + direction + cards.length) % cards.length;
+
+    const nextCard = cards[nextIndex];
+    const nextImage =
+        nextCard.querySelector(".work-image");
+
+    if(nextImage){
+        openArtViewer(nextImage, nextCard);
+    }
+
+}
+
+zoomOut.addEventListener(
+    "click",
+    () => {
+        artZoom = Math.max(.5, artZoom - .25);
+        updateArtZoom();
+    }
+);
+
+zoomReset.addEventListener(
+    "click",
+    () => {
+        artZoom = 1;
+        updateArtZoom();
+    }
+);
+
+zoomIn.addEventListener(
+    "click",
+    () => {
+        artZoom = Math.min(4, artZoom + .25);
+        updateArtZoom();
+    }
+);
+
+artPrevious.addEventListener(
+    "click",
+    () => showAdjacentArt(-1)
+);
+
+artNext.addEventListener(
+    "click",
+    () => showAdjacentArt(1)
+);
+
+artViewerImage.addEventListener(
+    "wheel",
+    event => {
+        event.preventDefault();
+        artZoom = Math.min(
+            4,
+            Math.max(.5, artZoom + (event.deltaY < 0 ? .25 : -.25))
+        );
+        updateArtZoom();
+    },
+    {passive:false}
+);
+
+artViewerStage.addEventListener(
+    "pointerdown",
+    event => {
+
+        if(artZoom <= 1 || event.button !== 0){
+            return;
+        }
+
+        artPanPointer = {
+            pointerId:event.pointerId,
+            startX:event.clientX,
+            startY:event.clientY,
+            panX:artPanX,
+            panY:artPanY
+        };
+
+        artViewerStage.setPointerCapture(event.pointerId);
+        artViewerStage.classList.add("is-panning");
+        event.preventDefault();
+
+    }
+);
+
+artViewerStage.addEventListener(
+    "pointermove",
+    event => {
+
+        if(!artPanPointer || event.pointerId !== artPanPointer.pointerId){
+            return;
+        }
+
+        artPanX = artPanPointer.panX + event.clientX - artPanPointer.startX;
+        artPanY = artPanPointer.panY + event.clientY - artPanPointer.startY;
+        updateArtZoom();
+
+    }
+);
+
+function stopArtPan(event){
+
+    if(!artPanPointer || event.pointerId !== artPanPointer.pointerId){
+        return;
+    }
+
+    artPanPointer = null;
+    artViewerStage.classList.remove("is-panning");
+
+}
+
+artViewerStage.addEventListener("pointerup", stopArtPan);
+artViewerStage.addEventListener("pointercancel", stopArtPan);
+artViewerStage.addEventListener("lostpointercapture", stopArtPan);
+
+artViewerClose.addEventListener(
+    "click",
+    () => artViewer.close()
+);
+
+artViewer.addEventListener(
+    "click",
+    event => {
+
+        if(event.target === artViewer){
+            artViewer.close();
+        }
+
+    }
+);
+
+const artImages = [
+
+    "2011X.png",
+    "BABY.png",
+    "CHIMERA.png",
+    "CLOWN.png",
+    "DARK FOREST.png",
+    "ERR.png",
+    "Fliqpy.jpg",
+    "FNF.png",
+    "FREDDY.png",
+    "JUBILEE.png",
+    "MONOCHROME.png",
+    "NUZI.png",
+    "REWRITE.png",
+    "SELENE.png",
+    "VALIZ.png"
+
+].map(
+    image => `assets/art/${image}`
+);
+
+for(let index = 1; index <= artImages.length; index++){
+
+    const card =
+        document.createElement("article");
+
+    card.className = "work-card art-slot";
+
+    const placeholder =
+        document.createElement("div");
+
+    placeholder.className = "work-placeholder";
+    placeholder.textContent = "ADD IMAGE";
+
+    const image =
+        document.createElement("img");
+
+    image.className = "work-image";
+
+    const imagePath =
+        artImages[index - 1];
+
+    if(imagePath){
+        image.src = imagePath;
+    }
+
+    const artworkFile =
+        imagePath ? imagePath.split("/").pop() : "";
+
+    const artworkTitle =
+        artworkFile
+            ? artworkFile.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ")
+            : `Obra ${index}`;
+
+    image.alt = artworkTitle;
+    image.draggable = false;
+    image.dataset.artworkName = artworkTitle;
+    image.dataset.artworkFile = artworkFile;
+
+    const number =
+        document.createElement("span");
+
+    number.className = "work-number";
+    number.textContent = String(index).padStart(2,"0");
+
+    const label =
+        document.createElement("span");
+
+    label.className = "work-label";
+    label.textContent = artworkTitle;
+
+    const input =
+        document.createElement("input");
+
+    input.type = "file";
+    input.accept = "image/*";
+    input.setAttribute(
+        "aria-label",
+        `Subir imagen de arte ${index}`
+    );
+
+    input.addEventListener(
+        "change",
+        () => {
+
+            const file = input.files[0];
+
+            if(!file){
+                return;
+            }
+
+            const image =
+                document.createElement("img");
+
+            image.className = "work-image";
+            image.src = URL.createObjectURL(file);
+
+            const artworkTitle =
+                file.name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ");
+
+            image.alt = artworkTitle;
+            image.draggable = false;
+            image.dataset.artworkName = artworkTitle;
+            image.dataset.artworkFile = file.name;
+            label.textContent = artworkTitle;
+
+            const previousImage =
+                card.querySelector(".work-image");
+
+            previousImage?.remove();
+            placeholder.remove();
+            card.prepend(image);
+
+        }
+    );
+
+    input.addEventListener(
+        "click",
+        event => event.stopPropagation()
+    );
+
+    card.addEventListener(
+        "click",
+        () => {
+
+            const currentImage =
+                card.querySelector(".work-image");
+
+            if(currentImage){
+                openArtViewer(currentImage, card);
+            }else{
+                input.click();
+            }
+
+        }
+    );
+
+    card.append(
+        imagePath ? image : placeholder,
+        number,
+        label,
+        input
+    );
+
+    artGallery.append(card);
+
+}
+
+const discordButton =
+    document.querySelector(
+        '[aria-controls="discordModal"]'
+    );
+
+const discordModal =
+    document.getElementById(
+        "discordModal"
+    );
+
+const discordCloseButton =
+    discordModal.querySelector(
+        ".discord-modal-close"
+    );
+
+discordButton.addEventListener(
+    "click",
+    () => discordModal.showModal()
+);
+
+discordCloseButton.addEventListener(
+    "click",
+    () => discordModal.close()
+);
+
+discordModal.addEventListener(
+    "click",
+    event => {
+
+        if(event.target === discordModal){
+            discordModal.close();
+        }
+
+    }
+);
+
+/* =========================================================
+   GLITCH ENGINE
+========================================================= */
+
+const glitchElements =
+    document.querySelectorAll(".glitch");
+
+const secretSignal =
+    document.getElementById("secretSignal");
+
+const secretMessages = [
+    "NULL_RESPONSE",
+    "SIGNAL_NOT_FOUND",
+    "MEMORY_CORRUPTED",
+    "ERROR_0X00",
+    "YOU_WERE_NOT_HERE"
+];
+
+function showSecretSignal(){
+
+    if(
+        document.hidden ||
+        window.getSelection()?.toString()
+    ){
+        setTimeout(showSecretSignal,1200);
+        return;
+    }
+
+    const message =
+        `> ${secretMessages[Math.floor(Math.random() * secretMessages.length)]}`;
+
+    secretSignal.textContent = message;
+    secretSignal.dataset.text = message;
+    secretSignal.classList.add("is-visible","active");
+
+    setTimeout(() => {
+
+        const corruptedMessage =
+            message.replace(/[A-Z]/g, character =>
+                Math.random() < .24 ? "█" : character
+            );
+
+        secretSignal.textContent = corruptedMessage;
+        secretSignal.dataset.text = corruptedMessage;
+        secretSignal.classList.remove("active");
+
+    },100 + Math.random() * 140);
+
+    setTimeout(() => {
+
+        secretSignal.classList.add("active");
+
+    },300 + Math.random() * 180);
+
+    setTimeout(() => {
+
+        secretSignal.textContent = "";
+        secretSignal.dataset.text = "";
+        secretSignal.classList.remove("is-visible","active");
+
+        setTimeout(showSecretSignal,5000 + Math.random() * 14000);
+
+    },850);
+
+}
+
+setTimeout(showSecretSignal,2500 + Math.random() * 5000);
+
+function randomGlitch(){
+
+    if(
+        document.hidden ||
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches
+    ){
+        return;
+    }
+
+    if(Math.random() > .12 + audioVisualLevel * .78){
+        return;
+    }
+
+    const element =
+        glitchElements[
+            Math.floor(
+                Math.random() *
+                glitchElements.length
+            )
+        ];
+
+    if(!element){
+        return;
+    }
+
+    element.classList.add("active");
+
+    setTimeout(() => {
+
+        element.classList.remove("active");
+
+    },120 + Math.random()*250);
+
+}
+
+setInterval(
+    randomGlitch,
+    400 + Math.random()*1100
+);
+
+
+/* =========================================================
+   RANDOM GLITCH BARS
+========================================================= */
+
+const bars =
+    document.querySelectorAll(".glitch-bar");
+
+let audioVisualLevel = 0;
+
+function glitchBars(){
+
+    if(document.hidden){
+        return;
+    }
+
+    const triggerChance =
+        .12 + audioVisualLevel * .82;
+
+    if(Math.random() < triggerChance){
+
+        bars.forEach(bar => {
+
+            if(Math.random() > .7 - audioVisualLevel * .55){
+
+                bar.style.top =
+                    Math.random()*100 + "%";
+
+                bar.style.left =
+                    Math.random()*30 + "%";
+
+                bar.style.width =
+                    Math.random()*60 + 5 + "%";
+
+                bar.style.height =
+                    `${2 + audioVisualLevel * 3 + Math.random() * 2}px`;
+
+                bar.style.opacity =
+                    Math.random()*(.08 + audioVisualLevel*.75);
+
+                setTimeout(() => {
+
+                    bar.style.opacity = 0;
+
+                },30 + Math.random()*(80 + audioVisualLevel*150));
+
+            }
+
+        });
+
+    }
+
+}
+
+setInterval(
+    glitchBars,
+    240
+);
+
+
+/* =========================================================
+   SCREEN FLASH
+========================================================= */
+
+const flash =
+    document.getElementById("flash");
+
+function screenFlash(){
+
+    const flashChance =
+        .02 + audioVisualLevel * .4;
+
+    if(!document.hidden && Math.random() < flashChance){
+
+        flash.style.setProperty(
+            "--flash-intensity",
+            String(.02 + audioVisualLevel * .16)
+        );
+
+        flash.classList.add("active");
+
+        setTimeout(() => {
+
+            flash.classList.remove("active");
+            flash.style.removeProperty("--flash-intensity");
+
+        },120);
+
+    }
+
+}
+
+setInterval(
+    screenFlash,
+    3500
+);
+
+
+/* =========================================================
+   SYSTEM STATUS
+========================================================= */
+
+const statusElement =
+    document.getElementById(
+        "systemStatus"
+    );
+
+const statuses = [
+
+    "SYSTEM_ONLINE",
+    "CREATIVE_PROCESS_RUNNING",
+    "MEMORY_ACCESS",
+    "ARCHIVE_OPEN",
+    "SIGNAL_DETECTED",
+    "VIVENEBRI_ONLINE",
+    "UNKNOWN_PROCESS",
+    "HEAVEN_CONNECTION_LOST",
+    "ARTIST_MODE_ACTIVE",
+    "REALITY_NOT_FOUND",
+    "JESTER_PROCESS_ACTIVE",
+    "FILE_CORRUPTED",
+    "NULL_RESPONSE",
+    "SIGNAL_UNSTABLE"
+
+];
+
+setInterval(() => {
+
+    if(document.hidden){
+        return;
+    }
+
+    statusElement.textContent =
+        statuses[
+            Math.floor(
+                Math.random() *
+                statuses.length
+            )
+        ];
+
+},1800);
+
+
+/* =========================================================
+   ACTUAL WORD CORRUPTION
+========================================================= */
+
+const corruptionCharacters = [
+
+    "█",
+    "▓",
+    "▒",
+    "░",
+    "0",
+    "1",
+    "X",
+    "#",
+    "%",
+    "/",
+    "\\",
+    "_",
+    "-",
+    "?",
+    "!",
+    "�"
+
+];
+
+const corruptible =
+    document.querySelectorAll(
+        ".glitch"
+    );
+
+function corruptWord(element){
+
+    if(
+        element.dataset.corrupting === "true"
+    ){
+        return;
+    }
+
+    const original =
+        element.dataset.original ||
+        element.textContent;
+
+    element.dataset.original =
+        original;
+
+    element.dataset.corrupting =
+        "true";
+
+    const chars =
+        [...original];
+
+    const amount =
+        Math.max(
+            1,
+            Math.floor(
+                chars.length * .10
+            )
+        );
+
+    for(
+        let i = 0;
+        i < amount;
+        i++
+    ){
+
+        const index =
+            Math.floor(
+                Math.random() *
+                chars.length
+            );
+
+        if(chars[index] !== " "){
+
+            chars[index] =
+                corruptionCharacters[
+                    Math.floor(
+                        Math.random() *
+                        corruptionCharacters.length
+                    )
+                ];
+
+        }
+
+    }
+
+    element.textContent =
+        chars.join("");
+
+    element.classList.add(
+        "corrupted"
+    );
+
+    setTimeout(() => {
+
+        element.textContent =
+            original;
+
+        element.classList.remove(
+            "corrupted"
+        );
+
+        element.dataset.corrupting =
+            "false";
+
+    },120 + Math.random()*350);
+
+}
+
+
+/* =========================================================
+   RANDOM CORRUPTION LOOP
+========================================================= */
+
+function randomCorruption(){
+
+    if(
+        document.hidden ||
+        Math.random() > .08 + audioVisualLevel * .62 ||
+        window.getSelection()?.toString()
+    ){
+        return;
+    }
+
+    const visible =
+        [...corruptible].filter(
+            element => {
+
+                const rect =
+                    element.getBoundingClientRect();
+
+                return (
+                    rect.bottom > 0 &&
+                    rect.top <
+                    window.innerHeight
+                );
+
+            }
+        );
+
+    if(!visible.length){
+        return;
+    }
+
+    const target =
+        visible[
+            Math.floor(
+                Math.random() *
+                visible.length
+            )
+        ];
+
+    corruptWord(target);
+
+}
+
+setInterval(
+    randomCorruption,
+    850 + Math.random()*1300
+);
+
+
+/* =========================================================
+   TITLE VARIATIONS
+========================================================= */
+
+const titleVariants = [
+
+    "THE DARK SIDE",
+    "THE D4RK SIDE",
+    "THE DARK S1DE",
+    "THE DΛRK SIDE",
+    "THE DARK.SIDE",
+    "THE DARK SIDE_",
+    "THE DARK // SIDE",
+    "THE DARK SIDE"
+
+];
+
+const heroTitle =
+    document.querySelector(
+        ".hero-title .glitch"
+    );
+
+setInterval(() => {
+
+    if(document.hidden){
+        return;
+    }
+
+    if(
+        Math.random() > .35
+    ){
+
+        const text =
+            titleVariants[
+                Math.floor(
+                    Math.random() *
+                    titleVariants.length
+                )
+            ];
+
+        heroTitle.textContent =
+            text;
+
+        heroTitle.setAttribute(
+            "data-text",
+            text
+        );
+
+        setTimeout(() => {
+
+            heroTitle.textContent =
+                "THE DARK SIDE";
+
+            heroTitle.setAttribute(
+                "data-text",
+                "THE DARK SIDE"
+            );
+
+        },300);
+
+    }
+
+},1800);
+
+
+/* =========================================================
+   USER BOX SECRET
+========================================================= */
+
+const userBox =
+    document.getElementById(
+        "userBox"
+    );
+
+let clicks = 0;
+
+userBox.addEventListener(
+    "click",
+    () => {
+
+        clicks++;
+
+        if(clicks >= 3){
+
+            userBox.querySelector(
+                ".user-lines"
+            ).innerHTML = `
+
+                <div>
+                    &gt; access_level:
+                    <b>GRANTED</b>
+                </div>
+
+                <div>
+                    &gt; identity:
+                    <b>RECOGNIZED</b>
+                </div>
+
+                <div>
+                    &gt; creativity:
+                    <b>UNSTABLE</b>
+                </div>
+
+                <div>
+                    &gt; heaven_connection:
+                    <b>OPEN</b>
+                </div>
+
+                <br>
+
+                <div>
+                    &gt; YOU ARE PART OF THE ARCHIVE.
+                </div>
+
+            `;
+
+            clicks = 0;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   KEYBOARD SECRETS
+========================================================= */
+
+let typed = "";
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key.length !== 1
+        ){
+            return;
+        }
+
+        typed +=
+            event.key.toLowerCase();
+
+        if(
+            typed.length > 20
+        ){
+            typed =
+                typed.slice(-20);
+        }
+
+        if(
+            typed.includes("vivenebri")
+        ){
+
+            console.log(
+                "IDENTITY CONFIRMED // VIVENEBRI"
+            );
+
+            typed = "";
+
+        }
+
+        if(
+            typed.includes("mistake")
+        ){
+
+            console.log(
+                "WELCOME BACK, G0DS_MISTAKE."
+            );
+
+            typed = "";
+
+        }
+
+        if(
+            typed.includes("heaven")
+        ){
+
+            console.log(
+                "HEAVEN_CONNECTION: LOST"
+            );
+
+            typed = "";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MOUSE MICRO DISTORTION
+========================================================= */
+
+document.addEventListener(
+    "mousemove",
+    () => {
+
+        if(
+            Math.random() > .988
+        ){
+
+            document.body.style.transform =
+                `translate(
+                    ${(Math.random()-.5)*3}px,
+                    ${(Math.random()-.5)*2}px
+                )`;
+
+            setTimeout(() => {
+
+                document.body.style.transform =
+                    "";
+
+            },60);
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   IMAGE FALLBACK
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".work-image"
+    )
+    .forEach(image => {
+
+        image.addEventListener(
+            "error",
+            () => {
+
+                const placeholder =
+                    document.createElement(
+                        "div"
+                    );
+
+                placeholder.className =
+                    "work-placeholder";
+
+                placeholder.textContent =
+                    "FILE NOT FOUND // ADD IMAGE";
+
+                image.replaceWith(
+                    placeholder
+                );
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+const music =
+    document.getElementById(
+        "bgMusic"
+    );
+
+const audioButton =
+    document.getElementById(
+        "audioButton"
+    );
+
+const audioPlayer =
+    document.querySelector(
+        ".audio-player"
+    );
+
+const musicDockButton =
+    document.getElementById("musicDockButton");
+
+const musicDockState =
+    document.getElementById("musicDockState");
+
+const musicTrackTitle =
+    document.getElementById("musicTrackTitle");
+
+const musicPrevious =
+    document.getElementById("musicPrevious");
+
+const musicNext =
+    document.getElementById("musicNext");
+
+const musicSeek =
+    document.getElementById("musicSeek");
+
+const musicCurrentTime =
+    document.getElementById("musicCurrentTime");
+
+const musicDuration =
+    document.getElementById("musicDuration");
+
+const backgroundGlow =
+    document.querySelector(".background-glow");
+
+const musicTracks = [
+    {src:"assets/music/Monochrome.mp3", title:"Monochrome.mp3"},
+    {src:"assets/music/A Little Piece of Heaven.mp3", title:"A Little Piece of Heaven.mp3"},
+    {src:"assets/music/Song To Say Goodbye.mp3", title:"Song To Say Goodbye.mp3"},
+    {src:"assets/music/TIME.mp3", title:"TIME.mp3"}
+];
+
+let currentTrackIndex = Math.floor(Math.random() * musicTracks.length);
+let isSeekingMusic = false;
+
+function formatMusicTime(seconds){
+
+    if(!Number.isFinite(seconds) || seconds < 0){
+        return "0:00";
+    }
+
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+
+    return `${minutes}:${String(remainingSeconds).padStart(2,"0")}`;
+
+}
+
+function updateMusicTimeline(){
+
+    const duration =
+        Number.isFinite(music.duration) ? music.duration : 0;
+
+    const currentTime =
+        Number.isFinite(music.currentTime) ? music.currentTime : 0;
+
+    musicDuration.textContent = formatMusicTime(duration);
+    musicCurrentTime.textContent = formatMusicTime(currentTime);
+    musicSeek.max = String(duration);
+
+    if(!isSeekingMusic){
+        musicSeek.value = String(currentTime);
+    }
+
+    musicSeek.setAttribute(
+        "aria-valuetext",
+        `${formatMusicTime(currentTime)} de ${formatMusicTime(duration)}`
+    );
+
+}
+
+function selectMusicTrack(index, autoplay = false){
+
+    currentTrackIndex =
+        (index + musicTracks.length) % musicTracks.length;
+
+    const track = musicTracks[currentTrackIndex];
+
+    music.pause();
+    music.src = track.src;
+    music.load();
+    musicTrackTitle.textContent = track.title;
+    updateMusicTimeline();
+
+    if(autoplay){
+        startBackgroundMusic();
+    }
+
+}
+
+let audioContext = null;
+let audioAnalyser = null;
+let frequencyData = null;
+let audioEffectsTimer = 0;
+
+function updateAudioReactiveEffects(){
+
+    if(music.paused || !audioAnalyser || audioContext.state !== "running"){
+        audioVisualLevel = 0;
+        updateParticleAudioEffects(0, true);
+        backgroundGlow.style.opacity = ".3";
+        audioEffectsTimer = 0;
+        return;
+    }
+
+    audioAnalyser.getByteFrequencyData(frequencyData);
+
+    let energy = 0;
+
+    for(const frequency of frequencyData){
+        energy += frequency * frequency;
+    }
+
+    const level =
+        Math.sqrt(energy / frequencyData.length) / 255;
+
+    const visualLevel =
+        Math.min(1, level * 2.5);
+
+    audioVisualLevel = visualLevel;
+    updateParticleAudioEffects(visualLevel);
+
+    backgroundGlow.style.opacity =
+        String(.3 + visualLevel * .7);
+
+    audioEffectsTimer =
+        window.setTimeout(updateAudioReactiveEffects, 1000 / 24);
+
+}
+
+function initializeAudioVisualizer(){
+
+    if(audioAnalyser){
+        return;
+    }
+
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if(!AudioContextClass){
+        return;
+    }
+
+    try{
+
+        audioContext = new AudioContextClass();
+        audioAnalyser = audioContext.createAnalyser();
+        audioAnalyser.fftSize = 256;
+
+        const audioSource =
+            audioContext.createMediaElementSource(music);
+
+        audioSource.connect(audioAnalyser);
+        audioAnalyser.connect(audioContext.destination);
+
+        frequencyData =
+            new Uint8Array(audioAnalyser.frequencyBinCount);
+
+        audioContext.addEventListener(
+            "statechange",
+            () => {
+
+                if(
+                    !music.paused &&
+                    audioContext.state === "running" &&
+                    !audioEffectsTimer
+                ){
+                    audioEffectsTimer =
+                        window.setTimeout(updateAudioReactiveEffects, 0);
+                }
+
+            }
+        );
+
+    }catch(error){
+
+        audioContext?.close();
+        audioContext = null;
+        audioAnalyser = null;
+
+    }
+
+}
+
+function syncMusicControls(){
+
+    const isPlaying = !music.paused;
+    const buttonText = isPlaying ? "Ⅱ" : "▶";
+    const buttonLabel = isPlaying ? "Pausar música" : "Reproducir música";
+
+    audioButton.textContent = buttonText;
+    musicDockButton.textContent = buttonText;
+    audioButton.setAttribute("aria-label", buttonLabel);
+    musicDockButton.setAttribute("aria-label", buttonLabel);
+    musicDockButton.setAttribute("aria-pressed", String(isPlaying));
+    musicDockButton.title = buttonLabel;
+    musicDockState.textContent = isPlaying ? "SIGNAL ACTIVE" : "SIGNAL IDLE";
+    audioPlayer.classList.toggle("playing", isPlaying);
+
+    if(isPlaying && audioAnalyser && !audioEffectsTimer){
+        audioEffectsTimer =
+            window.setTimeout(updateAudioReactiveEffects, 0);
+    }else if(!isPlaying){
+        clearTimeout(audioEffectsTimer);
+        audioEffectsTimer = 0;
+        audioVisualLevel = 0;
+        updateParticleAudioEffects(0, true);
+        backgroundGlow.style.opacity = ".3";
+    }
+
+}
+
+music.addEventListener("play", syncMusicControls);
+music.addEventListener("pause", syncMusicControls);
+music.addEventListener("timeupdate", updateMusicTimeline);
+music.addEventListener("durationchange", updateMusicTimeline);
+music.addEventListener("loadedmetadata", updateMusicTimeline);
+music.addEventListener(
+    "ended",
+    () => selectMusicTrack(currentTrackIndex + 1, true)
+);
+
+async function startBackgroundMusic(){
+
+    if(!music.paused){
+        return;
+    }
+
+    initializeAudioVisualizer();
+
+    try{
+
+        if(audioContext?.state === "suspended"){
+            await audioContext.resume();
+        }
+
+        await music.play();
+
+    }catch(error){
+        syncMusicControls();
+    }
+
+}
+
+function toggleBackgroundMusic(){
+
+    if(music.paused){
+        startBackgroundMusic();
+    }else{
+        music.pause();
+    }
+
+}
+
+function skipToPreviousTrack(){
+
+    if(music.currentTime > 3){
+        music.currentTime = 0;
+        updateMusicTimeline();
+        return;
+    }
+
+    selectMusicTrack(currentTrackIndex - 1, !music.paused);
+
+}
+
+function skipToNextTrack(){
+    selectMusicTrack(currentTrackIndex + 1, !music.paused);
+}
+
+audioButton.addEventListener("click", toggleBackgroundMusic);
+musicDockButton.addEventListener("click", toggleBackgroundMusic);
+musicPrevious.addEventListener("click", skipToPreviousTrack);
+musicNext.addEventListener("click", skipToNextTrack);
+
+musicSeek.addEventListener(
+    "input",
+    () => {
+
+        isSeekingMusic = true;
+
+        const seekTime = Number(musicSeek.value);
+
+        musicCurrentTime.textContent =
+            formatMusicTime(seekTime);
+
+        musicSeek.setAttribute(
+            "aria-valuetext",
+            `${formatMusicTime(seekTime)} de ${formatMusicTime(music.duration)}`
+        );
+
+    }
+);
+
+musicSeek.addEventListener(
+    "change",
+    () => {
+
+        music.currentTime = Number(musicSeek.value);
+        isSeekingMusic = false;
+        updateMusicTimeline();
+
+    }
+);
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.code !== "Space" || event.repeat){
+            return;
+        }
+
+        const target = event.target;
+
+        if(
+            target instanceof HTMLElement &&
+            (target.isContentEditable || target.closest("button,a,input,textarea,select"))
+        ){
+            return;
+        }
+
+        event.preventDefault();
+        toggleBackgroundMusic();
+
+    }
+);
+
+document.addEventListener(
+    "pointerdown",
+    () => {
+
+        if(!music.paused && audioContext?.state === "suspended"){
+            audioContext.resume().catch(() => {});
+        }
+
+    },
+    {once:true}
+);
+
+selectMusicTrack(currentTrackIndex);
+syncMusicControls();
+startBackgroundMusic();
+
+
+/* =========================================================
+   HIDDEN TAB PERFORMANCE
+========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if(document.hidden){
+
+            music.pause();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CONSOLE MESSAGE
+========================================================= */
+
+console.log(`
+
+████████████████████████████
+
+ VIVENEBRI_ARCHIVE.exe
+
+ creator detected.
+
+ alias: G0DS_MISTAKE
+
+ heaven connection:
+ ERROR
+
+ archive status:
+ UNSTABLE
+
+ message:
+
+ "KEEP CREATING."
+
+████████████████████████████
+
+`);
+
+if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+
+    const bootElements =
+        [...document.body.querySelectorAll("*")].filter(
+            element =>
+                !element.matches("script,style") &&
+                element.getClientRects().length > 0
+        );
+
+    const delayStep =
+        Math.min(2, 480 / Math.max(1, bootElements.length));
+
+    bootElements.forEach((element, index) => {
+        element.style.setProperty("--boot-delay", `${index * delayStep}ms`);
+        element.classList.add("boot-glitch");
+    });
+
+    window.setTimeout(() => {
+        bootElements.forEach(element => {
+            element.classList.remove("boot-glitch");
+            element.style.removeProperty("--boot-delay");
+        });
+    }, 950);
+
+}
+
+</script>
+
+</body>
+</html>
