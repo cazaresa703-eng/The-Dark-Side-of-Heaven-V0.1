@@ -101,7 +101,7 @@ body::before{
             rgba(16,16,16,.96) 48%,
             rgba(0,0,0,.98) 100%
         ),
-        url("assets/background.png");
+        url("background.png");
 
     background-size:cover;
     background-position:center;
@@ -2855,7 +2855,7 @@ footer{
 
             <img
                 class="main-logo"
-                src="assets/art/LOGO.png"
+                src="LOGO.png"
                 alt="Vivenebri"
             >
 
@@ -3055,7 +3055,7 @@ footer{
         <div class="artist-image">
 
             <img
-                src="assets/art/VALDRIC.png"
+                src="VALDRIC.png"
                 alt="Valdric"
                 draggable="false"
                 loading="lazy"
@@ -4312,9 +4312,7 @@ const artImages = [
     "SELENE.png",
     "VALIZ.png"
 
-].map(
-    image => `assets/art/${image}`
-);
+];
 
 for(let index = 1; index <= artImages.length; index++){
 
@@ -4342,7 +4340,7 @@ for(let index = 1; index <= artImages.length; index++){
     }
 
     const artworkFile =
-        imagePath ? imagePath.split("/").pop() : "";
+        imagePath || "";
 
     const artworkTitle =
         artworkFile
@@ -5196,10 +5194,10 @@ const backgroundGlow =
     document.querySelector(".background-glow");
 
 const musicTracks = [
-    {src:"assets/music/Monochrome.mp3", title:"Monochrome.mp3"},
-    {src:"assets/music/A Little Piece of Heaven.mp3", title:"A Little Piece of Heaven.mp3"},
-    {src:"assets/music/Song To Say Goodbye.mp3", title:"Song To Say Goodbye.mp3"},
-    {src:"assets/music/TIME.mp3", title:"TIME.mp3"}
+    {src:"Monochrome.mp3", title:"Monochrome.mp3"},
+    {src:"A Little Piece of Heaven.mp3", title:"A Little Piece of Heaven.mp3"},
+    {src:"Song To Say Goodbye.mp3", title:"Song To Say Goodbye.mp3"},
+    {src:"TIME.mp3", title:"TIME.mp3"}
 ];
 
 let currentTrackIndex = Math.floor(Math.random() * musicTracks.length);
